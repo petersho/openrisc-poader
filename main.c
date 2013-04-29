@@ -1,5 +1,5 @@
-#include "board.h"
-#include "uart.h"
+#include <board.h>
+#include <uart.h>
 
 int main()
 {

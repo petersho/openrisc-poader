@@ -1,7 +1,5 @@
-#include "board.h"
-#include "uart.h"
-
-#define IN_CLK	50000000
+#include <board.h>
+#include <uart.h>
 
 int uart_init(void)
 {

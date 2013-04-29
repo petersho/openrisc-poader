@@ -9,7 +9,7 @@ STRIP = $(CROSS_COMPILE)strip
 OBJCOPY = $(CROSS_COMPILE)objcopy
 OBJDUMP = $(CROSS_COMPILE)objdump
 
-CFLAGS += -Wall -g
+CFLAGS += -I./include -Wall -g
 LDFLAGS += -nostdlib -nodefaultlibs -nostartfiles -static -T poader.lds -Wl,-Map,poader.map
 #LDFLAGS += -nostdlib -nodefaultlibs -nostartfiles -static -Ttext 0x0 -Wl,-Map,poader.map
 
