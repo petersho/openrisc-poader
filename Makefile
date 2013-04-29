@@ -1,29 +1,31 @@
-CROSS_COMPILE = or32-elf-
+include config.mk
 
-AS = $(CROSS_COMPILE)as
-LD = $(CROSS_COMPILE)ld
-CC = $(CROSS_COMPILE)gcc
-AR = $(CROSS_COMPILE)ar
-NM = $(CROSS_COMPILE)nm
-STRIP = $(CROSS_COMPILE)strip
-OBJCOPY = $(CROSS_COMPILE)objcopy
-OBJDUMP = $(CROSS_COMPILE)objdump
-
-CFLAGS += -I./include -Wall -g
+CFLAGS += -I./include
 LDFLAGS += -nostdlib -nodefaultlibs -nostartfiles -static -T poader.lds -Wl,-Map,poader.map
 #LDFLAGS += -nostdlib -nodefaultlibs -nostartfiles -static -Ttext 0x0 -Wl,-Map,poader.map
 
-all: start uart main
-	$(CC) $(LDFLAGS) start.o uart.o main.o -o poader
+
+SUBDIRS += drivers
+DRIVER_OBJ = drivers/uart.o \
+
+all: start subdirs main
+	$(CC) $(LDFLAGS) start.o $(DRIVER_OBJ) main.o -o poader
 
 start: start.S
 	$(CC) $(CFLAGS) -c $@.S
 
 main: main.c
 	$(CC) $(CFLAGS) -c $@.c
-	
-uart: uart.c
-	$(CC) $(CFLAGS) -c $@.c
+
+$(OBJ):
+	$(CC) $(CFLAGS) -c $*.c
+
+subdirs:
+	@for dir in $(SUBDIRS) ; do $(MAKE) -C $$dir || exit 1 ; done
+
+#uart: uart.c
+#	$(CC) $(CFLAGS) -c $@.c
 
 clean:
 	rm -f *.o poader poader.map
+	$(MAKE) -C drivers clean
