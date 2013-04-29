@@ -13,8 +13,8 @@ CFLAGS += -Wall -g
 LDFLAGS += -nostdlib -nodefaultlibs -nostartfiles -static -T poader.lds -Wl,-Map,poader.map
 #LDFLAGS += -nostdlib -nodefaultlibs -nostartfiles -static -Ttext 0x0 -Wl,-Map,poader.map
 
-all: start main
-	$(CC) $(LDFLAGS) start.o main.o -o poader
+all: start uart main
+	$(CC) $(LDFLAGS) start.o uart.o main.o -o poader
 
 start: start.S
 	$(CC) $(CFLAGS) -c $@.S
@@ -22,6 +22,8 @@ start: start.S
 main: main.c
 	$(CC) $(CFLAGS) -c $@.c
 	
+uart: uart.c
+	$(CC) $(CFLAGS) -c $@.c
 
 clean:
 	rm -f *.o poader poader.map

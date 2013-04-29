@@ -1,7 +1,10 @@
+#include "board.h"
+#include "uart.h"
+
 int main()
 {
-	int a = 0;
 	
+	uart_init();
 	while(1);
 
 	return 0;
