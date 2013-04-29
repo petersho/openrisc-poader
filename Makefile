@@ -5,11 +5,12 @@ LDFLAGS += -nostdlib -nodefaultlibs -nostartfiles -static -T poader.lds -Wl,-Map
 #LDFLAGS += -nostdlib -nodefaultlibs -nostartfiles -static -Ttext 0x0 -Wl,-Map,poader.map
 
 
-SUBDIRS += drivers
-DRIVER_OBJ = drivers/uart.o \
+SUBDIRS += cli drivers
+DRIVER_OBJS += drivers/uart.o
+CLI_OBJS += cli/cli.o
 
 all: start subdirs main
-	$(CC) $(LDFLAGS) start.o $(DRIVER_OBJ) main.o -o poader
+	$(CC) $(LDFLAGS) start.o $(CLI_OBJS) $(DRIVER_OBJS) main.o -o poader
 
 start: start.S
 	$(CC) $(CFLAGS) -c $@.S
@@ -23,9 +24,7 @@ $(OBJ):
 subdirs:
 	@for dir in $(SUBDIRS) ; do $(MAKE) -C $$dir || exit 1 ; done
 
-#uart: uart.c
-#	$(CC) $(CFLAGS) -c $@.c
-
 clean:
 	rm -f *.o poader poader.map
 	$(MAKE) -C drivers clean
+	$(MAKE) -C cli clean
