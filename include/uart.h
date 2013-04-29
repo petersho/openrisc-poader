@@ -1,19 +1,24 @@
-#define UART_RX		0x0		/* In:  Receive buffer (DLAB=0) */
-#define UART_TX		0x0		/* Out: Transmit buffer (DLAB=0) */
-#define UART_DLL	0x0		/* Out: Divisor Latch Low (DLAB=1) */
-#define UART_DLM	0x1		/* Out: Divisor Latch High (DLAB=1) */
-#define UART_IER	0x1		/* Out: Interrupt Enable Register */
-#define UART_IIR	0x2		/* In:  Interrupt ID Register */
-#define UART_FCR	0x2		/* Out: FIFO Control Register */
-#define UART_EFR	0x2		/* I/O: Extended Features Register */
-					/* (DLAB=1, 16C660 only) */
-#define UART_LCR	0x3		/* Out: Line Control Register */
-#define UART_MCR	0x4		/* Out: Modem Control Register */
-#define UART_LSR	0x5		/* In:  Line Status Register */
-#define UART_MSR	0x6		/* In:  Modem Status Register */
-#define UART_SCR	0x7		/* I/O: Scratch Register */
-
-#define UART_BASE_ADDR	0x90000000
+struct or1ksim_uart {
+	union {	/* 0x0 */
+		unsigned char UART_RX;
+		unsigned char UART_TX;
+		unsigned char UART_DLL;
+	};
+	union {	/* 0x1 */
+		unsigned char UART_DLM;
+		unsigned char UART_IER;
+	};
+	union { /* 0x2*/
+		unsigned char UART_IIR;
+		unsigned char UART_FCR;
+		unsigned char UART_EFR;
+	};
+	unsigned char UART_LCR;	/* 0x3 */
+	unsigned char UART_MCR;	/* 0x4 */
+	unsigned char UART_LSR;	/* 0x5 */
+	unsigned char UART_MSR;	/* 0x6 */
+	unsigned char UART_SCR;	/* 0x7 */
+};
 
 /*
  * These are the definitions for the FIFO Control Register
@@ -62,8 +67,5 @@
 #define UART_LCR_WLEN6	0x01	/* Wordlength: 6 bits */
 #define UART_LCR_WLEN7	0x02	/* Wordlength: 7 bits */
 #define UART_LCR_WLEN8	0x03	/* Wordlength: 8 bits */
-
-
-
 
 int uart_init(void);
