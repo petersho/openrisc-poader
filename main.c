@@ -8,7 +8,10 @@ void system_init()
 }
 
 int main()
-{	
+{
+	/* Driver initial */
+	system_init();
+
 	cli_main();
 
 	while(1);

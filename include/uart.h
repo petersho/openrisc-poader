@@ -68,4 +68,15 @@ struct or1ksim_uart {
 #define UART_LCR_WLEN7	0x02	/* Wordlength: 7 bits */
 #define UART_LCR_WLEN8	0x03	/* Wordlength: 8 bits */
 
+/*
+ * These are the definitions for the Line Status Register
+ */
+#define UART_LSR_TEMT	0x40	/* Transmitter empty */
+#define UART_LSR_THRE	0x20	/* Transmit-hold-register empty */
+#define UART_LSR_BI	0x10	/* Break interrupt indicator */
+#define UART_LSR_FE	0x08	/* Frame error indicator */
+#define UART_LSR_PE	0x04	/* Parity error indicator */
+#define UART_LSR_OE	0x02	/* Overrun error indicator */
+#define UART_LSR_DR	0x01	/* Receiver data ready */
+
 int uart_init(void);
