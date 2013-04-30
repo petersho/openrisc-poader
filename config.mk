@@ -9,4 +9,4 @@ STRIP = $(CROSS_COMPILE)strip
 OBJCOPY = $(CROSS_COMPILE)objcopy
 OBJDUMP = $(CROSS_COMPILE)objdump
 
-CFLAGS += -Wall -g
+CFLAGS += -O0 -Wall -g
