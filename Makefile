@@ -5,7 +5,7 @@ CFLAGS += -I./include
 LDFLAGS += -nostdlib -nodefaultlibs -nostartfiles -static -Ttext 0x0 -Wl,-Map,poader.map
 
 
-SUBDIRS += cli drivers
+SUBDIRS += cli drivers lib
 DRIVER_OBJS += drivers/uart.o
 CLI_OBJS += cli/cli.o
 
@@ -26,5 +26,6 @@ subdirs:
 
 clean:
 	rm -f *.o poader poader.map
-	$(MAKE) -C drivers clean
 	$(MAKE) -C cli clean
+	$(MAKE) -C drivers clean
+	$(MAKE) -C lib clean
