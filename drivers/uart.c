@@ -32,6 +32,23 @@ void uart_putc(char c)
 	} while ((lsr & BOTH_EMPTY) != BOTH_EMPTY);
 }
 
+char uart_getc()
+{
+	volatile struct or1ksim_uart *uart;
+	unsigned char lsr;
+	char c;
+
+	uart = (volatile struct or1ksim_uart *)(UART_BASE_ADDR);
+	/* WAIT_FOR_CHAR */
+	do {
+		lsr = uart->UART_LSR;
+	} while ((lsr & UART_LSR_DR) != UART_LSR_DR);
+
+	c = uart->UART_RX;
+
+	return c;
+}
+
 int uart_init(void)
 {
 	int divisor = 0;

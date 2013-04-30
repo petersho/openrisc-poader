@@ -80,3 +80,5 @@ struct or1ksim_uart {
 #define UART_LSR_DR	0x01	/* Receiver data ready */
 
 int uart_init(void);
+void uart_putc(char c);
+char uart_getc(void);
